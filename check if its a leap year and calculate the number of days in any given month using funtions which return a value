@@ -86,6 +86,8 @@ print(days)
 
 
 def is_leap(year):
+  if len(year) > 4:
+    return "invalid year"
   if year % 4 == 0:
     if year % 100 == 0:
       if year % 400 == 0:
@@ -99,7 +101,7 @@ def is_leap(year):
 
 def days_in_month(year, month):
   if month > 12 or month < 1:
-    return "you keyed in a wrong value"
+    return "invalid month"
   month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]  
   if is_leap(year) and month == 2:
     return 29
