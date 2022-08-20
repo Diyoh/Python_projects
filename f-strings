@@ -1,0 +1,7 @@
+# say 
+score = 0
+height = 1.9
+iswinning = True
+# f-SyntaxWarning add an f just before the double or singlw quotes in found when you pass a string maybr into the print dte#atement in python to make it an f-string and then the other variables of different data types are added into the quotes inside curly braces tol print thhe different data types in one go.
+
+print(f"your score is {score}, and your height is {height} , you are winning is {iswinning}")
