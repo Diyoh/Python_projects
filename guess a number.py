@@ -109,9 +109,9 @@ def game():
       
   def check():
     if guess > answer:
-      return f"Too high\n Guess again: \nyou have {lives -1} attempts remaining to make a guess"
+      return f"Too high\nGuess again: \nyou have {lives -1} attempts remaining to make a guess"
     elif guess < answer:
-      return f"Too low\n Guess again: \nyou have {lives -1} attempts remaining to make a guess" 
+      return f"Too low\nGuess again: \nyou have {lives -1} attempts remaining to make a guess" 
     else:
       return "You win"
       
@@ -122,7 +122,7 @@ def game():
     compare = check()
     if compare == "You win":
       print(f"{compare} the right number is {answer}")
-      play_again = input("type 'p' to play again or 'q' to quit").lower()
+      play_again = input("type 'p' to play again or 'q' to quit: ").lower()
       if play_again == "p":
         clear()
         game()
@@ -133,7 +133,7 @@ def game():
       print(compare)
     
   print("You lose but all hope os not lost")
-  play_again = input("type 'p' to play again or 'q' to quit").lower()
+  play_again = input("type 'p' to play again or 'q' to quit: ").lower()
   if play_again == "p":
     clear()
     game()
