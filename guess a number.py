@@ -82,3 +82,63 @@ def game(lives):
     play_again()
 
 game(lives)
+
+
+
+
+
+
+
+
+
+
+# new one 
+from random import randint
+from replit import clear
+def game():
+  answer = randint(1, 100)
+  print(f"psst the answer is {answer}")
+  print("welcome to my game of guess a number")
+  print("I am thinking of a number between 1 - 100")
+  def level():
+    level = input("choose a level: type 'hard' or 'easy': ").lower()
+    if level == "hard":
+      return 5
+    elif level == "easy":
+      return 10
+      
+  def check():
+    if guess > answer:
+      return f"Too high\n Guess again: \nyou have {lives -1} attempts remaining to make a guess"
+    elif guess < answer:
+      return f"Too low\n Guess again: \nyou have {lives -1} attempts remaining to make a guess" 
+    else:
+      return "You win"
+      
+     
+  lives= level()
+  while lives > 0:
+    guess = int(input("Guess a number: "))
+    compare = check()
+    if compare == "You win":
+      print(f"{compare} the right number is {answer}")
+      play_again = input("type 'p' to play again or 'q' to quit").lower()
+      if play_again == "p":
+        clear()
+        game()
+      else:  
+        clear()
+    else:    
+      lives -= 1    
+      print(compare)
+    
+  print("You lose but all hope os not lost")
+  play_again = input("type 'p' to play again or 'q' to quit").lower()
+  if play_again == "p":
+    clear()
+    game()
+  else:  
+    clear() 
+
+
+game()
