@@ -95,6 +95,8 @@ game(lives)
 # new one 
 from random import randint
 from replit import clear
+EASY_LEVEL_TURNS = 10
+HARD_LEVEL_TURNS = 5
 def game():
   answer = randint(1, 100)
   print(f"psst the answer is {answer}")
@@ -103,9 +105,9 @@ def game():
   def level():
     level = input("choose a level: type 'hard' or 'easy': ").lower()
     if level == "hard":
-      return 5
+      return HARD_LEVEL_TURNS
     elif level == "easy":
-      return 10
+      return EASY_LEVEL_TURNS
       
   def check():
     if guess > answer:
