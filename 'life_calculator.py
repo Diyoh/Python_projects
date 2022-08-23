@@ -7,9 +7,6 @@ print(f"you have {days_left} days, {weeks_left} weeks, {months_left} months left
 
 
 
-
-
-
 #or 
 
 
