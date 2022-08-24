@@ -37,6 +37,8 @@ while continue_game:
      print(art.logo)
      choice_A = choice_B
      choice_B = random.choice(data)
+     if choice_A == choice_B:
+       choice_B = random.choice(data)
      print(F"You're right! Current score: {score}.")
   else:
     clear()
