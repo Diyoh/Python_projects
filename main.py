@@ -1,17 +1,47 @@
-from question_model import Question
-from data import question_data
-from quiz_brain import QuizBrain
+from turtle import Screen
+import time
+from snake import Snake
+from food import Food
+from scoreboard import Scoreboard
 
-print("welcome to the shiland word quiz, please choose True/False to answer the following questions, "
-      "trying to gain the maximum points you can")
-question_bank = []
-for question in question_data:
-    question_text = question["text"]
-    question_answer = question["answer"]
-    new_question = Question(question_text, question_answer)
-    question_bank.append(new_question)
+screen = Screen()
+screen.setup(width=600, height=600)
+screen.bgcolor("black")
+screen.title("Shiloh's snake game")
+screen.tracer(0)
 
-quiz = QuizBrain(question_bank)
-while quiz.still_has_questions():
-    quiz.next_question()
-print("Thank you for playing, you can go all over again")
+snake = Snake()
+food = Food()
+scoreboard = Scoreboard()
+
+screen.listen()
+screen.onkey(snake.up, "Up")
+screen.onkey(snake.down, "Down")
+screen.onkey(snake.left, "Left")
+screen.onkey(snake.right, "Right")
+
+game_is_on = True
+while game_is_on:
+    screen.update()
+    time.sleep(0.2)
+    snake.move()
+
+    # Detect collision with food
+    if snake.head.distance(food) < 15:
+        food.refresh()
+        snake.extend()
+        scoreboard.increase_score()
+
+    # Detect collision with wall
+    if snake.head.xcor() > 296 or snake.head.xcor() < -296 or snake.head.ycor() > 280 or snake.head.ycor() < -296:
+        game_is_on = False
+        scoreboard.game_over()
+
+    # detect collision with tail
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
+            game_is_on = False
+            scoreboard.game_over()
+    # if head collides with any segment in the tail trigger game_over
+
+screen.exitonclick()
