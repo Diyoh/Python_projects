@@ -1,3 +1,4 @@
+import turtle
 from turtle import Screen
 import time
 from snake import Snake
@@ -6,7 +7,7 @@ from scoreboard import Scoreboard
 
 screen = Screen()
 screen.setup(width=600, height=600)
-screen.bgcolor("black")
+screen.bgcolor("green")
 screen.title("Shiloh's snake game")
 screen.tracer(0)
 
@@ -34,14 +35,23 @@ while game_is_on:
 
     # Detect collision with wall
     if snake.head.xcor() > 296 or snake.head.xcor() < -296 or snake.head.ycor() > 280 or snake.head.ycor() < -296:
-        game_is_on = False
-        scoreboard.game_over()
+        scoreboard.reduce_lives()
+        if scoreboard.lives == 0:
+            game_is_on = False
+        scoreboard.reset_score()
+        snake.reset_snake()
 
     # detect collision with tail
-    for segment in snake.segments[1:]:
-        if snake.head.distance(segment) < 10:
-            game_is_on = False
-            scoreboard.game_over()
-    # if head collides with any segment in the tail trigger game_over
+    for segment in snake.segments:
+        if segment == snake.head:
+            pass
+        elif snake.head.distance(segment) < 10:
+            scoreboard.reduce_lives()
+            if scoreboard.lives == 0:
+                game_is_on = False
+            scoreboard.reset_score()
+            snake.reset_snake()
 
+    # if head collides with any segment in the tail trigger game_ov
+turtle.write("GAME OVER", True,  align="center", font="Poppins")
 screen.exitonclick()

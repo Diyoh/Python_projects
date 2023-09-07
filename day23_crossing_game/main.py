@@ -13,6 +13,7 @@ scoreboard = Scoreboard()
 
 screen.listen()
 screen.onkey(player.go_up, "Up")
+screen.onkeypress(player.go_up, "Up")
 
 game_is_on = True
 while game_is_on:
