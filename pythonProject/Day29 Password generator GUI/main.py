@@ -30,7 +30,7 @@ def generate_password():
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
 def save_password():
-    website = website_input.get()
+    website = website_input.get().title()
     username = username_input.get()
     passwords = password_input.get()
     new_data = {
@@ -42,8 +42,18 @@ def save_password():
     if len(website) == 0 or len(username) == 0 or len(passwords) == 0:
         messagebox.showinfo(title="Oops", message="Please dont leave any field Em[ty!")
     else:
-        with open("new_passwords.json", "w") as data_file:
-            json.dump(new_data, data_file)
+        try:
+            with open("my_passwords.json", "r") as data_file:
+                data = json.load(data_file)
+        except FileNotFoundError:
+            with open("my_passwords.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            data.update(new_data)
+            with open("my_passwords.json", "w") as data_file:
+                json.dump(data, data_file, indent=4)
+
+        finally:
             website_input.delete(0, END)
             website_input.focus()
             username_input.delete(0, END)
@@ -51,11 +61,32 @@ def save_password():
             password_input.delete(0, END)
 
 
+# _________________________  SEARCH PASSWORD ____________________________#
+def search_password():
+    website = website_input.get().title()
+    username = username_input.get()
+    try:
+        with open("my_passwords.json") as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title='ERROR', message="No data found")
+    else:
+        if len(website) == 0:
+            messagebox.showinfo(title="Oops", message="Please provide a website to search!")
+        else:
+            if website in data:
+                email = data[website]["email"]
+                password = data[website]["password"]
+                messagebox.showinfo(title=website, message=f"email: {email} \npassword: {password}")
+            else:
+                messagebox.showinfo(title='OOPS', message=f'no details for {website} exist')
+
+
 # ---------------------------- UI SETUP ------------------------------- #
 
 
 window = Tk()
-window.title("Diyoh Shioh Password manager")
+window.title("Diyoh Shiloh Password manager")
 window.config(padx=50, pady=50)
 
 canvas = Canvas(width=200, height=200)
@@ -64,23 +95,25 @@ canvas.create_image(100, 100, image=logo_img)
 canvas.grid(column=1, row=0)
 
 website_label = Label(text="Website:")
-website_label.grid(column=0, row=1)
+website_label.grid(column=0, row=1, )
 email_label = Label(text="Email/Username:")
 email_label.grid(column=0, row=2)
 password_label = Label(text="Password:")
 password_label.grid(column=0, row=3)
 
-website_input = Entry(width=40)
-website_input.grid(column=1, row=1, columnspan=2)
+website_input = Entry(width=5)
+website_input.grid(column=1, row=1, columnspan=1, sticky="ew")
 website_input.focus()
 username_input = Entry(width=40)
-username_input.grid(column=1, row=2, columnspan=2)
+username_input.grid(column=1, row=2, columnspan=2, sticky="ew")
 username_input.insert(0, "diyohshiloh2@gmail.com")
 password_input = Entry(width=21)
-password_input.grid(column=1, row=3)
+password_input.grid(column=1, row=3, sticky="ew")
 
-Add_button = Button(width=36, text="Add", command=save_password)
-Add_button.grid(column=1, row=4, columnspan=2)
-Generate_button = Button(text="Generate Password", command=generate_password)
-Generate_button.grid(column=2, row=3)
+Search_button = Button(text="Search", command=search_password, highlightthickness=0)
+Search_button.grid(column=2, row=1, sticky="ew")
+Add_button = Button(width=36, text="Add", command=save_password, highlightthickness=0)
+Add_button.grid(column=1, row=4, columnspan=2, sticky="ew")
+Generate_button = Button(text="Generate Password", command=generate_password, highlightthickness=0)
+Generate_button.grid(column=2, row=3, sticky="ew")
 window.mainloop()
