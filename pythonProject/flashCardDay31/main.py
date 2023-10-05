@@ -10,11 +10,10 @@ current_card = {}
 try:
     data = pandas.read_csv("data/words_to_learn.csv")
 except FileNotFoundError:
-    data = pandas.read_csv("data/french_words.csv")
-    to_learn = data.to_dict(orient="records")
+    original_data = pandas.read_csv("data/french_words.csv")
+    to_learn = original_data.to_dict(orient="records")
 else:
     to_learn = data.to_dict(orient="records")
-
 
 
 def next_card():
@@ -37,12 +36,9 @@ def flip_card():
 # ___________________ REMOVE KNOWN WORDS _____________________________#
 def is_known():
     to_learn.remove(current_card)
-    print(len(to_learn))
     rem_data = pandas.DataFrame(to_learn)
-    rem_data.to_csv("data/words_to_learn")
+    rem_data.to_csv("data/words_to_learn", index=False)
     next_card()
-
-
 
 
 # _____________________________ UI ___________________________________#
