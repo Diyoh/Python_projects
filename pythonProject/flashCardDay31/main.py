@@ -2,11 +2,19 @@ from tkinter import *
 import pandas
 import random
 
-# ____________________ NEXT CARD ___________________#
-
-data = pandas.read_csv("data/french_words.csv")
-to_learn = data.to_dict(orient="records")
+BACKGROUND_COLOR = "#B1DDC6"
+to_learn = {}
 current_card = {}
+
+# ____________________ NEXT CARD ___________________#
+try:
+    data = pandas.read_csv("data/words_to_learn.csv")
+except FileNotFoundError:
+    data = pandas.read_csv("data/french_words.csv")
+    to_learn = data.to_dict(orient="records")
+else:
+    to_learn = data.to_dict(orient="records")
+
 
 
 def next_card():
@@ -38,7 +46,7 @@ def is_known():
 
 
 # _____________________________ UI ___________________________________#
-BACKGROUND_COLOR = "#B1DDC6"
+
 
 window = Tk()
 window.title("FlashCard")
